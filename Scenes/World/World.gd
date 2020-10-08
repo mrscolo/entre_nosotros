@@ -12,7 +12,7 @@ func hide_start() -> void:
 	start_button.hide()
 
 
-func _on_StartGameButton_pressed():
+func _on_StartGameButton_pressed() -> void:
 	# ocultamos el boton
 	start_button.hide()
 	# TODO:  Generar mapa para partida (siguiente video?????)
