@@ -3,12 +3,19 @@ extends KinematicBody2D
 # velocidad del jugador
 export var speed : int = 150
 
+var is_impostor : bool = false
+
 # variable remota con la posicion y movimiento del jugador
 remotesync var remote_info : Dictionary = {
 	direction = Vector2.ZERO,
 	position = Vector2.ZERO,
 	animation = "idle"
 }
+
+func set_impostor(value : bool, is_master_impostor : bool) -> void:
+	is_impostor = value
+	if is_impostor && is_master_impostor:
+		$Label.modulate = Color(1.0 , 0.0, 0.0)
 
 func set_player_name(value : String) -> void:
 	# setear nombre de jugador

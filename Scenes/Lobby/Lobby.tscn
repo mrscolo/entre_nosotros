@@ -1,7 +1,9 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Assets/Images/star.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Lobby/Lobby.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Images/player_1.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Images/player_3.png" type="Texture" id=4]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.259494, 0.504545 ), 0.0, 0.0, 0, 0, Vector2( 0.493671, 0.0238637 ), 0.0, 0.0, 0, 0, Vector2( 0.746835, 0.495454 ), 0.0, 0.0, 0, 0, Vector2( 0.993671, 0.0238637 ), 0.0, 0.0, 0, 0 ]
@@ -22,15 +24,134 @@ scale = 0.5
 scale_random = 0.5
 scale_curve = SubResource( 2 )
 
-[sub_resource type="DynamicFontData" id=4]
-font_path = "res://Assets/Fonts/Dead Revolution.otf"
+[sub_resource type="Animation" id=4]
+resource_name = "idle"
+length = 20.0
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 1091.9, -0.25, 0, 0.25, 0, -94.7736, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 20 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 516.583, -0.25, 0, 0.25, 0, 49.389, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 20 )
+}
 
-[sub_resource type="DynamicFont" id=5]
-size = 28
-font_data = SubResource( 4 )
+[sub_resource type="Animation" id=5]
+resource_name = "idle"
+length = 5.0
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 360, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 5 )
+}
 
 [sub_resource type="Animation" id=6]
 resource_name = "idle"
+length = 15.0
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 198.891, -0.25, 0, 0.25, 0, 780.881, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 15 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 699.456, -0.25, 0, 0.25, 0, -57.3981, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 15 )
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "idle"
+length = 7.0
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 360, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 7 )
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "idle"
+length = 30.0
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( -59.0245, -0.25, 0, 0.25, 0, 1108.14, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 30 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 516.46, -0.25, 0, 0.25, 0, 496.278, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 30 )
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "idle"
+length = 25.0
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 360, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 25 )
+}
+
+[sub_resource type="DynamicFontData" id=10]
+font_path = "res://Assets/Fonts/Dead Revolution.otf"
+
+[sub_resource type="DynamicFont" id=11]
+size = 28
+font_data = SubResource( 10 )
+
+[sub_resource type="Animation" id=12]
 length = 1.9
 loop = true
 tracks/0/type = "bezier"
@@ -64,29 +185,28 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.5, 1, 1.5, 1.9 )
 }
 
-[sub_resource type="DynamicFontData" id=7]
+[sub_resource type="DynamicFontData" id=13]
 font_path = "res://Assets/Fonts/Dead Revolution.otf"
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=14]
 size = 20
-font_data = SubResource( 7 )
+font_data = SubResource( 13 )
 
-[sub_resource type="DynamicFontData" id=9]
+[sub_resource type="DynamicFontData" id=15]
 font_path = "res://Assets/Fonts/Dead Revolution.otf"
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=16]
 size = 18
-font_data = SubResource( 9 )
+font_data = SubResource( 15 )
 
-[sub_resource type="DynamicFontData" id=11]
+[sub_resource type="DynamicFontData" id=17]
 font_path = "res://Assets/Fonts/Dead Revolution.otf"
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="DynamicFont" id=18]
 size = 25
-font_data = SubResource( 11 )
+font_data = SubResource( 17 )
 
-[sub_resource type="Animation" id=13]
-resource_name = "load"
+[sub_resource type="Animation" id=19]
 length = 1.3
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("CanvasModulate:color:r")
@@ -149,8 +269,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0.4, 1, 1.3 )
 }
 
-[sub_resource type="Animation" id=14]
-resource_name = "transition"
+[sub_resource type="Animation" id=20]
 length = 1.5
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("CanvasModulate:color:r")
@@ -197,10 +316,10 @@ tracks/3/keys = {
 script = ExtResource( 2 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
-anchor_left = -0.581055
-anchor_top = -0.815
-anchor_right = 1.68164
-anchor_bottom = 2.255
+anchor_left = -0.591483
+anchor_top = -0.841697
+anchor_right = 1.67121
+anchor_bottom = 2.2283
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": true
@@ -210,7 +329,7 @@ __meta__ = {
 position = Vector2( 283.951, 499.082 )
 amount = 50
 lifetime = 5.0
-visibility_rect = Rect2( -200, -300, 1000, 1000 )
+visibility_rect = Rect2( -300, -500, 1100, 1000 )
 process_material = SubResource( 3 )
 texture = ExtResource( 1 )
 
@@ -224,6 +343,46 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
+[node name="Sprite" type="Sprite" parent="Control"]
+position = Vector2( 204.454, 167.195 )
+rotation = 2.76814
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/Sprite"]
+autoplay = "idle"
+anims/idle = SubResource( 4 )
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Control/Sprite"]
+autoplay = "idle"
+anims/idle = SubResource( 5 )
+
+[node name="Sprite2" type="Sprite" parent="Control"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 778.048, -53.7137 )
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/Sprite2"]
+autoplay = "idle"
+anims/idle = SubResource( 6 )
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Control/Sprite2"]
+autoplay = "idle"
+anims/idle = SubResource( 7 )
+
+[node name="Sprite3" type="Sprite" parent="Control"]
+modulate = Color( 0.0823529, 0.741176, 0.00392157, 1 )
+position = Vector2( 1108.14, 496.278 )
+rotation = 6.28319
+texture = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/Sprite3"]
+autoplay = "idle"
+anims/idle = SubResource( 8 )
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Control/Sprite3"]
+autoplay = "idle"
+anims/idle = SubResource( 9 )
+
 [node name="Panel" type="Panel" parent="Control"]
 anchor_left = 0.5
 anchor_right = 0.5
@@ -232,6 +391,7 @@ margin_top = 262.087
 margin_right = 175.07
 margin_bottom = 418.087
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -245,7 +405,7 @@ margin_bottom = 559.635
 rect_rotation = 3.0
 rect_scale = Vector2( 1.1, 1.1 )
 rect_pivot_offset = Vector2( 155, 25 )
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 11 )
 text = "**Entre ** nosotros **"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -253,7 +413,7 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Control/Panel/Label"]
 autoplay = "idle"
-anims/idle = SubResource( 6 )
+anims/idle = SubResource( 12 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel"]
 margin_left = 12.5724
@@ -274,7 +434,7 @@ margin_top = 5.0
 margin_right = 150.0
 margin_bottom = 27.0
 rect_min_size = Vector2( 150, 0 )
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 14 )
 text = "Nombre:"
 
 [node name="Name" type="LineEdit" parent="Control/Panel/VBoxContainer/HBoxContainer"]
@@ -282,7 +442,7 @@ margin_left = 154.0
 margin_right = 354.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 200, 0 )
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 14 )
 text = "Nombre"
 align = 2
 
@@ -296,7 +456,7 @@ margin_top = 5.0
 margin_right = 150.0
 margin_bottom = 27.0
 rect_min_size = Vector2( 150, 0 )
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 14 )
 text = "IP:"
 
 [node name="IP" type="LineEdit" parent="Control/Panel/VBoxContainer/HBoxContainer2"]
@@ -304,7 +464,7 @@ margin_left = 154.0
 margin_right = 354.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 200, 0 )
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 14 )
 text = "127.0.0.1"
 align = 2
 
@@ -312,7 +472,7 @@ align = 2
 margin_top = 72.0
 margin_right = 354.0
 margin_bottom = 92.0
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 16 )
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="Control/Panel/VBoxContainer"]
@@ -325,14 +485,14 @@ alignment = 1
 margin_left = 86.0
 margin_right = 175.0
 margin_bottom = 33.0
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 18 )
 text = "Crear"
 
 [node name="JoinButton" type="Button" parent="Control/Panel/VBoxContainer/HBoxContainer3"]
 margin_left = 179.0
 margin_right = 268.0
 margin_bottom = 33.0
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 18 )
 text = "Unirse"
 
 [node name="ItemList" type="ItemList" parent="Control/Panel/VBoxContainer"]
@@ -342,8 +502,8 @@ margin_bottom = 142.0
 auto_height = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/load = SubResource( 13 )
-anims/transition = SubResource( 14 )
+anims/load = SubResource( 19 )
+anims/transition = SubResource( 20 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 [connection signal="pressed" from="Control/Panel/VBoxContainer/HBoxContainer3/HostButton" to="." method="_on_HostButton_pressed"]
