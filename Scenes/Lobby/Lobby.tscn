@@ -344,7 +344,7 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="Control"]
-position = Vector2( 204.454, 167.195 )
+position = Vector2( 1091.9, 516.583 )
 rotation = 2.76814
 texture = ExtResource( 3 )
 

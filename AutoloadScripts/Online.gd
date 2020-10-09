@@ -12,8 +12,10 @@ var players : Dictionary = {}
 # array para modular el color del personaje
 var modulate_colors : Array = [
 	Color(1.0, 1.0, 1.0), Color(1.0, 0.0, 0.0), Color(0.0, 1.0, 0.0), Color(1.0, 1.0, 0.0), Color(1.0, 0.0, 1.0), 
-	Color(0.0, 1.0, 1.0), Color(0.0, 0.3, 0.3), Color(0.5, 0.0, 0.5), Color(0.7, 0.7, 0.0), Color(0.9, 0.0, 0.9)
+	Color(0.0, 1.0, 1.0), Color(0.2, 0.1, 0.3), Color(0.2, 0.5, 0.5), Color(0.5, 0.7, 0.1), Color(0.1, 0.3, 0.9)
 ]
+# posicion de jugadores al arrancar partida
+var spawn_players : Dictionary = {}
 
 signal players_number_changed
 signal connected_ok
@@ -42,14 +44,17 @@ func _ready() -> void:
 func _player_connected(id : int) -> void:
 	# registrmos jugador
 	rpc_id(id, "register_player", player_name)
-	# si es el jugador servidor llamamos a start_game
-	rpc("start_game")
 
 func _player_disconnected(id : int) -> void:
 	# borramos el jugador desconectado
-	players.erase(id)
+	if players.has(id):
+		players.erase(id)
+	if spawn_players.has(id):
+		spawn_players.erase(id)
+	rpc("remove_player_from_game", id)
 	emit_signal("players_number_changed")
 
+	
 func _connected_ok() -> void:
 	emit_signal("connected_ok")
 
@@ -70,24 +75,53 @@ remote func register_player(user_name : String):
 	emit_signal("players_number_changed")
 
 master func start_game() -> void:
-	# variables a hacer cargar
-	var spawn_players : Dictionary = {}
-	# jugador local
-	spawn_players[get_tree().get_network_unique_id()] = {
-		index = 1,
-		name = player_name
-	}
+	if !spawn_players.has(get_tree().get_network_unique_id()):
+		# jugador local
+		spawn_players[get_tree().get_network_unique_id()] = {
+			index = get_player_index(),
+			name = player_name,
+			color = get_player_color()
+		}
 	# jugadores remotos
 	for player in players:
-		spawn_players[player] = {
-			index = spawn_players.size() + 1,
-			name = players[player]
-		}
+		if !spawn_players.has(player):
+			spawn_players[player] = {
+				index = get_player_index(),
+				name = players[player],
+				color = get_player_color()
+			}
 	for player in spawn_players:
 		# llamamos al configure game para cada peer
 		rpc_id(player, "configure_game", spawn_players)
 	# llamamos a configure game en el servidor
 	configure_game(spawn_players)
+
+func get_player_color() -> Color:
+	# buscamos un color no seleccionado
+	randomize()
+	while true:
+		var index : int = floor(modulate_colors.size() * randf())
+		var color : Color = modulate_colors[index]
+		var is_used : bool = false
+		for player in spawn_players.values():
+			if player.color == color:
+				is_used = true
+				break
+		if !is_used:
+			return color
+	return modulate_colors[0] # nunca vamos a llegar a esta instruccion
+
+func get_player_index() -> int:
+	# buscamos la posicion de aparicion del personaje
+	for i in range(1, 10):
+		var is_used : bool = false
+		for player in spawn_players.values():
+			if player.index == i:
+				is_used = true
+				break
+		if !is_used:
+			return i
+	return modulate_colors[0]
 
 remote func configure_game(spawn_players : Dictionary) -> void:
 	# cargamos el mundo
@@ -116,7 +150,7 @@ func add_player_to_game(n_id : int, spawn_player : Dictionary) -> void:
 	# instanciamos al jugador
 	player = preload("res://Scenes/Player/Player.tscn").instance()
 	# instanciamos la camara
-	var camera : Camera2D = preload("res://Scenes/Camera/Camera.tscn").instance()
+	var camera : Node2D = preload("res://Scenes/Camera/Camera.tscn").instance()
 	player.set_name(str(n_id))
 	# agregar network master
 	player.set_network_master(n_id)
@@ -132,6 +166,16 @@ func add_player_to_game(n_id : int, spawn_player : Dictionary) -> void:
 	# mascara
 	player.set_collision_mask(2 * spawn_player.index)
 	# color
-	player.set_color(modulate_colors[spawn_player.index - 1])
+	player.set_color( spawn_player.color)
 	# agregar el jugador al mundo
 	world.get_node("Players").add_child(player)
+ 
+
+remotesync func remove_player_from_game(id : int) -> void:
+	var world : Node = get_node("/root/World")
+	if world == null:
+		return
+	var player : KinematicBody2D = world.get_node("Players/" + str(id))
+	if player == null:
+		return
+	world.get_node("Players").remove_child(player)
