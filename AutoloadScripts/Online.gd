@@ -173,10 +173,7 @@ func add_player_to_game(n_id : int, spawn_player : Dictionary) -> void:
 
 remotesync func remove_player_from_game(id : int) -> void:
 	# eliminamos el personaje del juego
-	var world : Node = get_node("/root/World")
-	if world == null:
-		return
-	var player : KinematicBody2D = world.get_node("Players/" + str(id))
+	var player : KinematicBody2D = get_node("/root/World/Players/" + str(id))
 	if player == null:
 		return
-	world.get_node("Players").remove_child(player)
+	get_node("/root/World/Players").remove_child(player)
