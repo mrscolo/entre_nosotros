@@ -172,6 +172,7 @@ func add_player_to_game(n_id : int, spawn_player : Dictionary) -> void:
  
 
 remotesync func remove_player_from_game(id : int) -> void:
+	# eliminamos el personaje del juego
 	var world : Node = get_node("/root/World")
 	if world == null:
 		return
