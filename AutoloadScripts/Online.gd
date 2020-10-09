@@ -19,6 +19,7 @@ var spawn_players : Dictionary = {}
 
 signal players_number_changed
 signal connected_ok
+signal error
 
 func create_game(user_name : String) -> void:
 	# crear partida
@@ -59,10 +60,12 @@ func _connected_ok() -> void:
 	emit_signal("connected_ok")
 
 func _server_disconnected() -> void:
+	emit_signal("error")
 	# TODO: gestionar desconexiones
 	pass
 
 func _connected_fail() -> void:
+	emit_signal("error")
 	# TODO: gestionar errores de conexion
 	pass
 	

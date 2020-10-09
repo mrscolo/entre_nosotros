@@ -15,6 +15,17 @@ func _ready() -> void:
 	# conectamos a las signal de la clase singleton
 	Online.connect("connected_ok", self, "_on_connected_ok")
 	Online.connect("players_number_changed", self, "_on_players_number_changed")
+	Online.connect("error", self, "_on_error")
+
+func _on_error() -> void:
+	var world : Node = get_node("/root/World")
+	if world != null:
+		get_node("/root").remove_child(world)
+	$Control.show()
+	error_label.text = "Error de conexion con el servidor"
+	host_button.show()
+	join_button.show()
+	item_list.clear()
 
 func _on_connected_ok() -> void:
 	# ocultamos botones
