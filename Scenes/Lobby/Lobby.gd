@@ -18,6 +18,7 @@ func _ready() -> void:
 	Online.connect("error", self, "_on_error")
 
 func _on_error() -> void:
+	# si existe error de conexion o perdemos conexoin con el servidor lo gestionamos
 	var world : Node = get_node("/root/World")
 	if world != null:
 		get_node("/root").remove_child(world)
