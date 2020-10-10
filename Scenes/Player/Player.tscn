@@ -47,7 +47,9 @@ font_data = SubResource( 3 )
 [sub_resource type="CircleShape2D" id=5]
 radius = 48.4677
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"player",
+]]
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]

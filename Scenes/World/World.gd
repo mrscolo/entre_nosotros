@@ -62,10 +62,7 @@ remote func send_impostors(impostors : Array) -> void:
 		# enviamos el valor de impostor
 		var player : KinematicBody2D = get_node("Players/" + n_id)
 		player.set_impostor(true, impostors.has(str(get_tree().get_network_unique_id())))
-	if main_player == null:
-		return
 	for player in get_node("Players").get_children():
-		player.set_main_player(main_player)
 		# enviamos el mundo a cada jugador
 		player.set_world(self)
 	if main_player.is_impostor:

@@ -62,7 +62,7 @@ func _physics_process(delta : float) -> void:
 		})
 	# si no es el jugador local, pero el jugador local es asesino, no tiene timeout activo y ademas el player es matable
 	# lo matamos!
-	elif world.main_player != null && world.main_player.is_impostor && world.kill_timeout == 0 && is_killable && Input.get_action_strength("ui_select") > 0:
+	elif world != null && world.main_player != null && world.main_player.is_impostor && world.kill_timeout == 0 && is_killable && Input.get_action_strength("ui_select") > 0:
 		world.set_kill_timeout(30) # reseteamos el timeout para matar
 		rpc("kill_player", get_name()) # enviamos la muerte a todos los jugadores
 	else: # no es conexion maestra y el personaje es controlador por un jugador remoto
@@ -90,14 +90,13 @@ func set_animation(direction : Vector2) -> void:
 	elif direction.x > 0:
 		$AnimatedSprite.flip_h = false
 
-func _on_KillingArea2D_body_entered(body) -> void:
-	if body == self || is_killable:
+func _on_KillingArea2D_body_entered(body : PhysicsBody2D) -> void:
+	if body == null || !body.is_in_group("player") || body == self || is_killable:
 		return
 	is_killable = true
 
-
-func _on_KillingArea2D_body_exited(body) -> void:
-	if body == self || !is_killable:
+func _on_KillingArea2D_body_exited(body : PhysicsBody2D) -> void:
+	if body == null || !body.is_in_group("player") || body == self || !is_killable:
 		return
 	is_killable = false
 
