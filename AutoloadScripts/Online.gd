@@ -22,6 +22,8 @@ signal connected_ok
 signal error
 
 func create_game(user_name : String) -> void:
+	players.clear()
+	spawn_players.clear()
 	# crear partida
 	player_name = user_name
 	var peer : NetworkedMultiplayerENet = NetworkedMultiplayerENet.new()

@@ -91,12 +91,14 @@ func set_animation(direction : Vector2) -> void:
 		$AnimatedSprite.flip_h = false
 
 func _on_KillingArea2D_body_entered(body : PhysicsBody2D) -> void:
-	if body == null || !body.is_in_group("player") || body == self || is_killable:
+	# hacemos al player remoto como matable si se dan las condiciones
+	if body == null || world == null || world.main_player == null || !world.main_player.is_impostor || world.main_player != body || is_impostor:
 		return
 	is_killable = true
 
 func _on_KillingArea2D_body_exited(body : PhysicsBody2D) -> void:
-	if body == null || !body.is_in_group("player") || body == self || !is_killable:
+	# quitamos al personaje remoto como matable si se dan las condiciones
+	if body == null || world == null || world.main_player == null || !world.main_player.is_impostor || world.main_player != body || is_impostor:
 		return
 	is_killable = false
 
