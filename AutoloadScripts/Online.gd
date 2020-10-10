@@ -12,7 +12,7 @@ var players : Dictionary = {}
 # array para modular el color del personaje
 var modulate_colors : Array = [
 	Color(1.0, 1.0, 1.0), Color(1.0, 0.0, 0.0), Color(0.0, 1.0, 0.0), Color(1.0, 1.0, 0.0), Color(1.0, 0.0, 1.0), 
-	Color(0.0, 1.0, 1.0), Color(0.2, 0.1, 0.3), Color(0.2, 0.5, 0.5), Color(0.5, 0.7, 0.1), Color(0.1, 0.3, 0.9)
+	Color(0.0, 1.0, 1.0), Color(0.3, 0.3, 0.7), Color(0.2, 0.5, 0.5), Color(0.5, 0.7, 0.1), Color(0.1, 0.3, 0.9)
 ]
 # posicion de jugadores al arrancar partida
 var spawn_players : Dictionary = {}
