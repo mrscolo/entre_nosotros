@@ -161,6 +161,7 @@ func add_player_to_game(n_id : int, spawn_player : Dictionary) -> void:
 	if get_tree().get_network_unique_id() == n_id:
 		# agregamos la camara
 		player.add_child(camera)
+		world.set_main_player(player)
 	
 	player.set_player_name(spawn_player.name)
 	# posicion de spawn
