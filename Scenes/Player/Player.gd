@@ -27,6 +27,8 @@ func set_world(value : Node) -> void:
 	world = value
 
 func kill() -> void:
+	# emitimos particulas de sangre
+	$BloodParticles2D.emitting = true
 	# asignamos que esta muerto
 	is_dead = true
 	# deshabilitamos su area de muerte
