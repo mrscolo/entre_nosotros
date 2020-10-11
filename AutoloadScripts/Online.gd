@@ -63,13 +63,9 @@ func _connected_ok() -> void:
 
 func _server_disconnected() -> void:
 	emit_signal("error")
-	# TODO: gestionar desconexiones
-	pass
 
 func _connected_fail() -> void:
 	emit_signal("error")
-	# TODO: gestionar errores de conexion
-	pass
 	
 remote func register_player(user_name : String):
 	# Obtenemos el id del rpc sender
@@ -156,6 +152,7 @@ func add_player_to_game(n_id : int, spawn_player : Dictionary) -> void:
 	player = preload("res://Scenes/Player/Player.tscn").instance()
 	# instanciamos la camara
 	var camera : Node2D = preload("res://Scenes/Camera/Camera.tscn").instance()
+	# asignamos nombre al nodo del jugador
 	player.set_name(str(n_id))
 	# agregar network master
 	player.set_network_master(n_id)
@@ -163,8 +160,10 @@ func add_player_to_game(n_id : int, spawn_player : Dictionary) -> void:
 	if get_tree().get_network_unique_id() == n_id:
 		# agregamos la camara
 		player.add_child(camera)
-		world.set_main_player(player)
-	
+		world.set_master_player(player)
+	# asignamos el mundo al jugador
+	player.set_world(world)
+	# asignamos el nombre del jugador
 	player.set_player_name(spawn_player.name)
 	# posicion de spawn
 	var spawn_pos : Position2D = world.get_node("SpawnPosition/Position2D" + str(spawn_player.index))

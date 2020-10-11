@@ -5,12 +5,12 @@ onready var start_button   : Button = $CanvasLayer/Control/HBoxContainer/StartGa
 onready var timeout_label  : Label  = $CanvasLayer/KillTimeoutLabel
 onready var timeout_timer  : Timer  = $CanvasLayer/KillTimeoutLabel/Timer
 
-var main_player : KinematicBody2D
+var master_player : KinematicBody2D
 var kill_timeout : int = 10
 
-func set_main_player(value : KinematicBody2D) -> void:
+func set_master_player(value : KinematicBody2D) -> void:
 	# asignamos el player local
-	main_player = value
+	master_player = value
 	
 func set_players_number(value : int) -> void:
 	# cambiamos el numero de jugadores
@@ -29,10 +29,9 @@ func hide_start() -> void:
 func _on_StartGameButton_pressed() -> void:
 	# ocultamos el boton
 	start_button.hide()
-	# TODO:  Generar mapa para partida (siguiente video?????)
+	# TODO:  Cambiar mapa de carga por mapa de partida, mas elaborado y con alguna mision (habra siguiente video?????)
 	# ---------------------------------------------------
 	# ---------------------------------------------------
-	
 	# Creamos los impostores
 	var num_players : int = $Players.get_children().size()
 	var num_impostors : int = 2 if num_players >= 6 else 1
@@ -52,20 +51,23 @@ func _on_StartGameButton_pressed() -> void:
 		var player : KinematicBody2D = $Players.get_children()[index]
 		impostors.append(player.name)
 	# enviamos los impostores a los usuarios remotos
-	rpc("send_impostors", impostors)
+	rpc("config_players", impostors)
 	# enviamos los impostores al usuario local
-	send_impostors(impostors)
+	config_players(impostors)
+	# aqui tambien se podria haber utilizado un remotesync en send_impostors para evitar llamar 2 veces al procedimiento
 	
-remote func send_impostors(impostors : Array) -> void:
+remote func config_players(impostors : Array) -> void:
+	# recorremos todos los jugadores
+	for player in get_node("Players").get_children():
+		# reseteamos las areas que pudiesen estar deshabilitadas
+		player.reset_player()
 	# recorremos los impostores
 	for n_id in impostors:
 		# enviamos el valor de impostor
 		var player : KinematicBody2D = get_node("Players/" + n_id)
 		player.set_impostor(true, impostors.has(str(get_tree().get_network_unique_id())))
-	for player in get_node("Players").get_children():
-		# enviamos el mundo a cada jugador
-		player.set_world(self)
-	if main_player.is_impostor:
+	# si el jugador local es impostor, mostramos el temporizador de kills
+	if master_player.is_impostor:
 		$CanvasLayer/KillTimeoutLabel.show()
 		$CanvasLayer/KillTimeoutLabel/Timer.start()
 
@@ -76,7 +78,7 @@ func kill_player(id : String) -> void:
 		return
 	player.kill()
 	# si el jugador muerto es el local, deshabilitamos las luces de camara
-	if player == main_player:
+	if player == master_player:
 		var camera : Camera2D = player.get_node("Camera")
 		if camera == null:
 			return

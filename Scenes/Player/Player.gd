@@ -16,13 +16,15 @@ remotesync var remote_info : Dictionary = {
 }
 
 func set_impostor(value : bool, is_master_impostor : bool) -> void:
+	# asignamos valor de impostor
 	is_impostor = value
+	# si el main es un impostor pintamos el label de rojo
 	if is_impostor && is_master_impostor:
 		$Label.modulate = Color(1.0 , 0.0, 0.0)
 
 func set_world(value : Node) -> void:
+	# asignamos el mundo
 	world = value
-
 
 func kill() -> void:
 	# asignamos que esta muerto
@@ -41,9 +43,17 @@ func set_color(value : Color) -> void:
 	# setear color del jugador
 	$AnimatedSprite.modulate = value
 
+func reset_player() -> void:
+	# habilitar area para matar al jugador
+	$KillingArea2D/CollisionShape2D.disabled = false
+	# reseteamos variables
+	is_dead     = false
+	is_impostor = false
+	is_killable = false
+
 func _physics_process(delta : float) -> void:
 	# si el jugador local esta vivo y el jugador remoto muerto, salimos
-	if is_dead && !world.main_player.is_dead:
+	if is_dead && !world.master_player.is_dead:
 		if $AnimatedSprite.animation != "dead":
 			$AnimatedSprite.play("dead")
 		return
@@ -62,7 +72,7 @@ func _physics_process(delta : float) -> void:
 		})
 	# si no es el jugador local, pero el jugador local es asesino, no tiene timeout activo y ademas el player es matable
 	# lo matamos!
-	elif world != null && world.main_player != null && world.main_player.is_impostor && world.kill_timeout == 0 && is_killable && Input.get_action_strength("ui_select") > 0:
+	elif world.master_player.is_impostor && world.kill_timeout == 0 && is_killable && Input.get_action_strength("ui_select") > 0:
 		world.set_kill_timeout(30) # reseteamos el timeout para matar
 		rpc("kill_player", get_name()) # enviamos la muerte a todos los jugadores
 	else: # no es conexion maestra y el personaje es controlador por un jugador remoto
@@ -71,7 +81,6 @@ func _physics_process(delta : float) -> void:
 		self.position = remote_info.position
 	# asignamos la animacion
 	set_animation(direction)
-	
 	# movemos el personaje
 	move_and_slide(direction * speed)
 
@@ -92,13 +101,13 @@ func set_animation(direction : Vector2) -> void:
 
 func _on_KillingArea2D_body_entered(body : PhysicsBody2D) -> void:
 	# hacemos al player remoto como matable si se dan las condiciones
-	if body == null || world == null || world.main_player == null || !world.main_player.is_impostor || world.main_player != body || is_impostor:
+	if !world.master_player.is_impostor || world.master_player != body || is_impostor:
 		return
 	is_killable = true
 
 func _on_KillingArea2D_body_exited(body : PhysicsBody2D) -> void:
 	# quitamos al personaje remoto como matable si se dan las condiciones
-	if body == null || world == null || world.main_player == null || !world.main_player.is_impostor || world.main_player != body || is_impostor:
+	if !world.master_player.is_impostor || world.master_player != body || is_impostor:
 		return
 	is_killable = false
 
