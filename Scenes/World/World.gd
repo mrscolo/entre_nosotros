@@ -71,12 +71,12 @@ remote func config_players(impostors : Array) -> void:
 		$CanvasLayer/KillTimeoutLabel.show()
 		$CanvasLayer/KillTimeoutLabel/Timer.start()
 
-func kill_player(id : String) -> void:
+func kill_player(id_dead : String, id_killer : String) -> void:
 	# matamos al jugador
-	var player : KinematicBody2D = get_node("Players/" + id)
+	var player : KinematicBody2D = get_node("Players/" + id_dead)
 	if player == null:
 		return
-	player.kill()
+	player.kill(id_killer)
 	# si el jugador muerto es el local, deshabilitamos las luces de camara
 	if player == master_player:
 		var camera : Camera2D = player.get_node("Camera")

@@ -26,7 +26,11 @@ func set_world(value : Node) -> void:
 	# asignamos el mundo
 	world = value
 
-func kill() -> void:
+func kill(id_killer : String) -> void:
+	var id_master : String = world.master_player.get_name()
+	# emitimos sonido de cuchillada si somos el impostor o el asesinado
+	if id_master == id_killer || id_master == get_name():
+		$AudioStreamPlayer2D.play()
 	# emitimos particulas de sangre
 	$BloodParticles2D.emitting = true
 	# asignamos que esta muerto
@@ -76,7 +80,7 @@ func _physics_process(delta : float) -> void:
 	# lo matamos!
 	elif world.master_player.is_impostor && world.kill_timeout == 0 && is_killable && Input.get_action_strength("ui_select") > 0:
 		world.set_kill_timeout(30) # reseteamos el timeout para matar
-		rpc("kill_player", get_name()) # enviamos la muerte a todos los jugadores
+		rpc("kill_player", get_name(), world.master_player.get_name()) # enviamos la muerte a todos los jugadores
 	else: # no es conexion maestra y el personaje es controlador por un jugador remoto
 		# asignamos los valores desde la variable remota
 		direction = remote_info.direction
@@ -113,6 +117,6 @@ func _on_KillingArea2D_body_exited(body : PhysicsBody2D) -> void:
 		return
 	is_killable = false
 
-remotesync func kill_player(id : String) -> void:
+remotesync func kill_player(id_dead : String, id_killer : String) -> void:
 	# matamos al jugador
-	world.kill_player(id)
+	world.kill_player(id_dead, id_killer)
