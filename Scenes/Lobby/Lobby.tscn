@@ -343,43 +343,45 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Control"]
+[node name="Animations" type="Node2D" parent="Control"]
+
+[node name="Sprite" type="Sprite" parent="Control/Animations"]
 position = Vector2( 188.457, 160.897 )
 rotation = 2.09734
 texture = ExtResource( 3 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/Sprite"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/Animations/Sprite"]
 autoplay = "idle"
 anims/idle = SubResource( 4 )
 
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="Control/Sprite"]
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Control/Animations/Sprite"]
 autoplay = "idle"
 anims/idle = SubResource( 5 )
 
-[node name="Sprite2" type="Sprite" parent="Control"]
+[node name="Sprite2" type="Sprite" parent="Control/Animations"]
 modulate = Color( 1, 0, 0, 1 )
 position = Vector2( 778.048, -53.7137 )
 texture = ExtResource( 3 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/Sprite2"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/Animations/Sprite2"]
 autoplay = "idle"
 anims/idle = SubResource( 6 )
 
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="Control/Sprite2"]
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Control/Animations/Sprite2"]
 autoplay = "idle"
 anims/idle = SubResource( 7 )
 
-[node name="Sprite3" type="Sprite" parent="Control"]
+[node name="Sprite3" type="Sprite" parent="Control/Animations"]
 modulate = Color( 0.0823529, 0.741176, 0.00392157, 1 )
 position = Vector2( 1108.14, 496.278 )
-rotation = 6.28319
+rotation = 4.46638e-06
 texture = ExtResource( 4 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/Sprite3"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/Animations/Sprite3"]
 autoplay = "idle"
 anims/idle = SubResource( 8 )
 
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="Control/Sprite3"]
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Control/Animations/Sprite3"]
 autoplay = "idle"
 anims/idle = SubResource( 9 )
 
@@ -398,10 +400,10 @@ __meta__ = {
 [node name="Label" type="Label" parent="Control/Panel"]
 anchor_top = -0.00807657
 anchor_bottom = -0.00807657
-margin_left = 28.7395
-margin_top = -59.982
-margin_right = 338.74
-margin_bottom = -10.9817
+margin_left = 59.7462
+margin_top = 510.635
+margin_right = 369.747
+margin_bottom = 559.635
 rect_rotation = -0.191345
 rect_scale = Vector2( 1.00638, 1.00638 )
 rect_pivot_offset = Vector2( 155, 25 )
@@ -506,5 +508,6 @@ anims/load = SubResource( 19 )
 anims/transition = SubResource( 20 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color( 0, 0, 0, 1 )
 [connection signal="pressed" from="Control/Panel/VBoxContainer/HBoxContainer3/HostButton" to="." method="_on_HostButton_pressed"]
 [connection signal="pressed" from="Control/Panel/VBoxContainer/HBoxContainer3/JoinButton" to="." method="_on_JoinButton_pressed"]
